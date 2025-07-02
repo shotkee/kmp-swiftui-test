@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct InsurancesView: View {
+    var buyButtonTap: (() -> Void)?
+    
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
@@ -17,7 +19,7 @@ struct InsurancesView: View {
                     Spacer()
                     
                     Button(action: {
-                        print("navigate to buy list")
+                        buyButtonTap?()
                     }) {
                        Text("Купить")
                             .padding(.horizontal, 10)

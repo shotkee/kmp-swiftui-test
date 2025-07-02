@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct MainScreenView: View {    
+struct MainScreenView: View {
+    var buyProduct: (() -> Void)?
+    
     var body: some View {
-        //NavigationView {
-            ScrollView {
-                VStack(spacing: 14) {
-                    StoriesView()
-                    InsurancesView()
-                }
+        ScrollView {
+            VStack(spacing: 14) {
+                StoriesView()
+                InsurancesView(buyButtonTap: buyProduct)
             }
-            .background(Color(.systemBackground))
-        //}
+        }
+        .background(Color(.systemBackground))
     }
 }
 
