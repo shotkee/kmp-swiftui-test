@@ -3,7 +3,6 @@ package network
 import dto.InsuranceMain
 import dto.InsuranceProductCategoryList
 import dto.Response
-import dto.Story
 import dto.StoryList
 import io.ktor.client.*
 import io.ktor.client.call.body
@@ -21,7 +20,7 @@ class ApiService(private val client: HttpClient = MyNetworkClient.httpClient) {
         return request(client,"https://alfa-stage.entelis.team/api/insurances")
     }
 
-    suspend fun storires(): Result<StoryList, NetworkError> {
+    suspend fun stories(): Result<StoryList, NetworkError> {
         return request(client,"https://alfa-stage.entelis.team/api/stories?screen_width=414")
     }
 

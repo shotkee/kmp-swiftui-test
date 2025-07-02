@@ -3,6 +3,7 @@ package di
 import dependencies.MyRepository
 import dependencies.MyRepositoryImpl
 import dependencies.MyViewModel
+import network.ApiService
 import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.singleOf
@@ -14,4 +15,5 @@ expect val platformModule : Module
 val sharedModule = module {
     singleOf(::MyRepositoryImpl).bind<MyRepository>()
     viewModelOf(::MyViewModel)
+    single { ApiService() }
 }

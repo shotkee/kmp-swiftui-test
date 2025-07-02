@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import Shared
 
 struct MainScreenView: View {
     var buyProduct: (() -> Void)?
+    
+    //@StateObject private var testViewModel = TestViewModel()
     
     var body: some View {
         ScrollView {
