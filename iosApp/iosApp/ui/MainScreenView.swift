@@ -11,13 +11,12 @@ struct MainScreenView: View {
     var body: some View {
         //NavigationView {
             ScrollView {
-                VStack {
+                VStack(spacing: 14) {
                     StoriesView()
-                    Spacer().frame(height: 16)
                     InsurancesView()
                 }
             }
-            .background(Color.green)
+            .background(Color(.systemBackground))
         //}
     }
 }

@@ -19,7 +19,7 @@ struct StoriesView: View {
                         .cornerRadius(8)
                 }
             }
-            .padding()
+            .padding(.horizontal)
         }
     }
 }
