@@ -25,6 +25,9 @@ struct ContentView: View {
                 switch value {
                     case "buyProductsList":
                         BuyListScreenView()
+							.onAppear{
+								testService.loadProducts()
+							}
                     
                     default:
                         VStack{}
