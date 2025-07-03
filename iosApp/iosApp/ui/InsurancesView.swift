@@ -6,8 +6,11 @@
 //
 
 import SwiftUI
+import Shared
 
 struct InsurancesView: View {
+	@EnvironmentObject var testService: TestService
+	
     var buyButtonTap: (() -> Void)?
     
     var body: some View {
@@ -33,9 +36,9 @@ struct InsurancesView: View {
                 Spacer(minLength: 20)
                 
                 VStack(spacing: 2) {
-                    ForEach(0..<20) { index in
-                        SectionView(index: index)
-                    }
+					ForEach(testService.insuranceMain?.insuranceGroupList ?? [], id:  \.self) { (group: InsuranceGroup) in
+						SectionView(insuranceGroup: group)
+					}
                 }
                 .background(Color.clear)
                 .clipped()
@@ -56,42 +59,44 @@ struct InsurancesView: View {
 }
 
 struct SectionView: View {
-    @State var index = 0
     @State var contentIsHidden = false
+	
+	var insuranceGroup: InsuranceGroup?
     
     var body: some View {
         VStack {
             SectionHeaderView(
-                index: index,
+				insuranceGroup: insuranceGroup,
                 toggleCollapse: {
                     contentIsHidden = !contentIsHidden
                 }
             )
             
             if !contentIsHidden {
-                SectionContentView(index: index)
+				SectionContentView(
+					categoryList: insuranceGroup?.insuranceGroupCategoryList
+				)
             }
         }
-        .background(Color.white)
+		.background(.backgroundContent)
     }
 }
 
 struct SectionHeaderView: View {
-    @State var index = 0
+	@State var insuranceGroup: InsuranceGroup?
     
     var toggleCollapse: (() -> Void)?
     
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text("Элемент \(index)")
-                Text("Второй заголовок \(index)")
+				Text(insuranceGroup?.objectType ?? "")
+				Text(insuranceGroup?.objectName ?? "")
             }
             
             Spacer()
             
             Button(action: {
-                print("collapse \(index + 1)")
                 toggleCollapse?()
             }) {
                Text("1")
@@ -104,18 +109,42 @@ struct SectionHeaderView: View {
 }
 
 struct SectionContentView: View {
-    @State var index = 0
+	var categoryList: [InsuranceGroupCategory]?
     
     var body: some View {
-        HStack {
-            Rectangle()
-                .fill(Color.gray)
-                .frame(height: 200)
-                .frame(maxWidth: .infinity)
-                .overlay(
-                    Text("Content \(index + 1)")
-                )
+		VStack {
+			ForEach(categoryList ?? [], id: \.self) { (category: InsuranceGroupCategory) in
+				Text(category.insuranceCategory.title)
+				
+				ListView(insuranceList: category.insuranceList)
+			}
+			.frame(maxWidth: .infinity, alignment: .leading)
         }
+		.background(.gray)
         .padding(EdgeInsets(top: 0, leading: 15, bottom: 15, trailing: 15))
     }
 }
+
+struct ListView: View {
+	var insuranceList: [InsuranceShort]?
+	
+	var body: some View {
+		VStack {
+			ForEach(insuranceList ?? [], id: \.self) { (insurance: InsuranceShort) in
+				Text(insurance.title)
+				
+				let date: Kotlinx_datetimeInstant? = insurance.startDate
+				let dateString = dateFormatter.string(from: convertKotlinDateToDate(date) ?? Date())
+				
+				Text("Действителен по " + dateString)
+			}
+			.frame(maxWidth: .infinity, alignment: .leading)
+		}
+	}
+}
+
+private let dateFormatter: DateFormatter = {
+	let dateFormatter = DateFormatter()
+	dateFormatter.dateFormat = "dd.MM.yyyy"
+	return dateFormatter
+}()

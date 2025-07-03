@@ -8,7 +8,7 @@
 import SwiftUI
 import Shared
 
-struct MainScreenView: View {
+struct MainScreenView: View {	
     var buyProduct: (() -> Void)?
     
     //@StateObject private var testViewModel = TestViewModel()
