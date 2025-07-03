@@ -34,7 +34,8 @@ struct ContentView: View {
         }
         .tint(.iconAccent)
 		.onAppear {
-			testService.loadData()
+			testService.loadStories()
+			testService.loadInsurances()
 		}
 		.environmentObject(testService)
     }

@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import Shared
 
 struct StoriesView: View {
+	@EnvironmentObject var testService: TestService
+	
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 9) {
-                ForEach(0..<10) { index in
-                    StoryView()
+				ForEach(testService.storyList?.stories ?? [], id:  \.self) { (story: Story) in
+					StoryView(story: story)
                 }
             }
             .padding(.horizontal)
@@ -25,23 +28,31 @@ struct StoriesView: View {
 }
 
 struct StoryView: View {
-    @State var title = ""
+	var story: Story?
     
     var body: some View {
-        ZStack(alignment: .bottomLeading) {
-            AsyncImage(url: URL(
-                string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
-            )) { image in
-                image.resizable()
-            } placeholder: {
-                Color.iconSecondary
-            }
-            .clipShape(
-                RoundedRectangle(cornerRadius: 6)
-            )
-            .background(.clear)
-            
-            //Text("\(title)").foregroundColor(.white)
+		ZStack(alignment: .bottomLeading) {
+			AsyncImage(url: URL(
+				string: story?.previewUrlPath ?? ""
+			)) { image in
+				image.resizable()
+			} placeholder: {
+				Color.iconSecondary
+			}
+			.clipShape(
+				RoundedRectangle(cornerRadius: 6)
+			)
+			.background(.clear)
+
+			LinearGradient(
+				gradient: Gradient(colors: [.imageOverlayStop, .imageOverlayStart]),
+				startPoint: .top,
+				endPoint: .bottom
+			)
+			.cornerRadius(6)
+	
+			Text(story?.title ?? "")
+				.foregroundColor(Color.from(hex: String(story?.titleColor ?? 0xFFFFFF)))
         }
         .padding(4)
         .frame(width: 102, height: 102)
