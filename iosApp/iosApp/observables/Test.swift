@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftUI
-@preconcurrency import Shared
+@preconcurrency import shared
 
 
 class TestService: ObservableObject {

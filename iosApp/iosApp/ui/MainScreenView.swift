@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Shared
+import shared
 
 struct MainScreenView: View {	
     var buyProduct: (() -> Void)?

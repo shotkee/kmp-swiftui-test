@@ -6,7 +6,7 @@
 //  Created by vit on 03.07.2025.
 //
 
-import Shared
+import shared
 import Foundation
 import SwiftUI
 

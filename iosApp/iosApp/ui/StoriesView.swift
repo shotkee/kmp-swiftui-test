@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Shared
+import shared
 
 struct StoriesView: View {
 	@EnvironmentObject var testService: TestService
