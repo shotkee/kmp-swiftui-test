@@ -18,6 +18,7 @@ struct InsurancesView: View {
             VStack(spacing: 0) {
                 HStack {
                     Text("Полисы")
+						.font(Style.Font.demiBold(size: 24))
                     
                     Spacer()
                     
@@ -25,9 +26,9 @@ struct InsurancesView: View {
                         buyButtonTap?()
                     }) {
                        Text("Купить")
-                            .padding(.horizontal, 10)
+							.padding(EdgeInsets(top: 6, leading: 10, bottom: 6, trailing: 10))
+							.font(Style.Font.normal(size: 15))
                     }
-                    .frame(height: 36)
                     .foregroundColor(Color(.textContrast))
                     .background(Color(.backgroundAccent))
                     .clipShape(Capsule())
@@ -66,6 +67,7 @@ struct SectionView: View {
     var body: some View {
         VStack {
             SectionHeaderView(
+				contentIsHidden: contentIsHidden,
 				insuranceGroup: insuranceGroup,
                 toggleCollapse: {
                     contentIsHidden = !contentIsHidden
@@ -83,7 +85,8 @@ struct SectionView: View {
 }
 
 struct SectionHeaderView: View {
-	@State var insuranceGroup: InsuranceGroup?
+	@State var contentIsHidden = false
+	var insuranceGroup: InsuranceGroup?
     
     var toggleCollapse: (() -> Void)?
     
@@ -91,18 +94,28 @@ struct SectionHeaderView: View {
         HStack {
             VStack(alignment: .leading) {
 				Text(insuranceGroup?.objectType ?? "")
+					.font(Style.Font.normal(size: 11))
 				Text(insuranceGroup?.objectName ?? "")
+					.font(Style.Font.demiBold(size: 16))
             }
             
             Spacer()
             
             Button(action: {
                 toggleCollapse?()
+				
+				self.contentIsHidden = !contentIsHidden
             }) {
-               Text("1")
+				if contentIsHidden {
+					Image(.divkitDown)
+						.frame(width: 24, height: 24)
+				} else {
+					Image(.divkitUp)
+						.frame(width: 24, height: 24)
+						.tint(.iconPrimary)
+				}
             }
             .frame(width: 32, height: 32)
-            .background(Color.green)
         }
         .padding(EdgeInsets(top: 15, leading: 15, bottom: 15, trailing: 15))
     }
@@ -115,6 +128,7 @@ struct SectionContentView: View {
 		VStack {
 			ForEach(categoryList ?? [], id: \.self) { (category: InsuranceGroupCategory) in
 				Text(category.insuranceCategory.title)
+					.font(Style.Font.normal(size: 11))
 				
 				ListView(insuranceList: category.insuranceList)
 			}
@@ -132,11 +146,13 @@ struct ListView: View {
 		VStack {
 			ForEach(insuranceList ?? [], id: \.self) { (insurance: InsuranceShort) in
 				Text(insurance.title)
+					.font(Style.Font.normal(size: 18))
 				
 				let date: Kotlinx_datetimeInstant? = insurance.startDate
 				let dateString = dateFormatter.string(from: convertKotlinDateToDate(date) ?? Date())
 				
 				Text("Действителен по " + dateString)
+					.font(Style.Font.normal(size: 11))
 			}
 			.frame(maxWidth: .infinity, alignment: .leading)
 		}

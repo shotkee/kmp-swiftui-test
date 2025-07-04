@@ -14,8 +14,14 @@ struct BuyListScreenView: View {
     var body: some View {
         ScrollView(.vertical) {
             VStack(spacing: 9) {
-				ForEach(testService.insuranceProductCategoryList?.products ?? [], id:  \.self) { (category: InsuranceProductCategory) in
-					ForEach(category.productList, id:  \.self) { (product: InsuranceProduct) in
+				ForEach(
+					testService.insuranceProductCategoryList?.products ?? [],
+					id:  \.self
+				) { (category: InsuranceProductCategory) in
+					ForEach(
+						category.productList,
+						id:  \.self
+					) { (product: InsuranceProduct) in
 						ProductCardView(product: product)
 					}
                 }
@@ -23,7 +29,7 @@ struct BuyListScreenView: View {
             .padding(.horizontal)
         }
         .background(Color(.backgroundContent))
-        .navigationBarTitle("Купить полис")
+		.navigationBarTitle("Купить полис").font(Style.Font.demiBold(size: 16))
         .toolbarRole(.editor)
     }
 }
@@ -37,9 +43,11 @@ struct ProductCardView: View {
                 VStack(alignment: .leading){
 					Text(product?.title ?? "")
                         .foregroundColor(.textPrimary)
+						.font(Style.Font.demiBold(size: 13))
 					
 					Text(product?.text ?? "")
                         .foregroundColor(.textSecondary)
+						.font(Style.Font.normal(size: 15))
 					
 					ForEach(product?.tagList ?? [], id:  \.self) { (tag: InsuranceProductTag) in
 						TagView(tag: tag)
@@ -78,5 +86,6 @@ struct TagView: View {
             .padding(EdgeInsets(top: 2, leading: 10, bottom: 2, trailing: 10))
 			.background(Color.from(hex: tag?.backgroundColor ?? "#00FFFFFF") ?? Color.backgroundTertiary)
             .cornerRadius(4)
+			.font(Style.Font.normal(size: 15))
     }
 }

@@ -4,5 +4,13 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>TT-Norms-Pro-DemiBold.otf</string>
+		<string>TT-Norms-Pro-Regular.otf</string>
+		<string>TT-Norms-Pro-Normal.otf</string>
+		<string>TT-Norms-Pro-Medium.otf</string>
+		<string>TT-Norms-Pro-Italic.otf</string>
+	</array>
 </dict>
 </plist>

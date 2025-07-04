@@ -52,7 +52,9 @@ struct StoryView: View {
 			.cornerRadius(6)
 	
 			Text(story?.title ?? "")
+				.padding(10)
 				.foregroundColor(Color.from(hex: String(story?.titleColor ?? 0xFFFFFF)))
+				.font(Style.Font.normal(size: 13))
         }
         .padding(4)
         .frame(width: 102, height: 102)

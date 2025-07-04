@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "divkit.down.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
